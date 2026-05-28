@@ -1,14 +1,41 @@
+import { useEffect, useState } from "react";
 import { TarjetaForm } from "../components/TarjetaForm";
+import { tarjetasService } from "../../../../Core-Nucleo/Tarjetas/tarjetaService";
+import type { Tarjeta } from "../../../../domain/Entities/Tarjeta";
 
 export function TarjetasPage() {
+  const [tarjetas, setTarjetas] = useState<Tarjeta[]>([]);
+
+  const cargarTarjetas = async () => {
+    try {
+      const data = await tarjetasService.obtenerTarjetas();
+
+      setTarjetas(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // CUANDO CARGA LA PÁGINA
+  useEffect(() => {
+    console.log("Entró al useEffect")
+    cargarTarjetas();
+  }, []);
+
   return (
-    <div className="bg-white rounded-2xl p-8 shadow-sm min-h-[500px]">
+    <div>
 
-      <h1 className="text-3xl font-bold text-slate-800 mb-8">
-        Tarjetas
-      </h1>
+      <h1>Tarjetas</h1>
 
-      <TarjetaForm />
+      {tarjetas.map((tarjeta) => (
+
+        <div key={tarjeta.id}>
+
+          <p>{tarjeta.nombre}</p>
+
+        </div>
+
+      ))}
 
     </div>
   )

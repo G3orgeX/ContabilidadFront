@@ -1,20 +1,18 @@
-
-
-import type { ReactNode } from "react"
+import { Outlet } from "react-router-dom"
 import { Sidebar } from "./Sidebar"
 
-interface Props {
-  children: ReactNode
-}
-
-export function DashboardLayout({ children }: Props) {
+export function DashboardLayout() {
   return (
     <div className="flex">
+
       <Sidebar />
 
       <main className="flex-1 bg-slate-100 min-h-screen p-8">
-        {children}
+
+        <Outlet />
+
       </main>
+
     </div>
   )
 }
